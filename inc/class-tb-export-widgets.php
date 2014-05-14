@@ -49,13 +49,19 @@ class Theme_Blvd_Export_Widgets extends Theme_Blvd_Export {
 
 			$value = get_option( $widget->option_name );
 
-			if ( $value && is_array($value) && count($value) ) {
-				$value = serialize($value);
-			} else {
-				$value = '';
+			// For custom menu widget, save slug of menu, opposed to ID.
+			if ( ( $widget->option_name == 'widget_nav_menu' || $widget->option_name == 'widget_themeblvd_horz_menu_widget' ) && is_array($value) ) {
+				foreach ( $value as $key => $instance ) {
+					if ( ! empty( $instance['nav_menu'] ) ) {
+						$menu = get_term_by( 'id', $instance['nav_menu'], 'nav_menu' );
+						if ( $menu ) {
+							$value[$key]['nav_menu'] = $menu->slug;
+						}
+					}
+				}
 			}
 
-			$widgets[$widget->option_name] = $value;
+			$widgets[$widget->option_name] = maybe_serialize($value);
 		}
 
 		// Output the XML file content
