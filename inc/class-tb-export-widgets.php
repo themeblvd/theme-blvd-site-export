@@ -61,7 +61,7 @@ class Theme_Blvd_Export_Widgets extends Theme_Blvd_Export {
 				}
 			}
 
-			$widgets[$widget->option_name] = maybe_serialize($value);
+			$widgets[$widget->option_name] = base64_encode(maybe_serialize($value));
 		}
 
 		// Output the XML file content
