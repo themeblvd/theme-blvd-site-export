@@ -65,6 +65,7 @@ function themeblvd_site_export_init() {
 		'filename' => 'site-settings.xml',
 		'base_url' => $base_url
 	);
+
 	$_themeblvd_site_options = new Theme_Blvd_Export_Site_Options( 'site_settings', $args );
 
 	// Export site widgets
@@ -72,14 +73,19 @@ function themeblvd_site_export_init() {
 		'filename' => 'site-widgets.xml',
 		'base_url' => $base_url
 	);
+
 	$_themeblvd_export_widgets = new Theme_Blvd_Export_Widgets( 'site_widgets', $args );
 
 	// Export theme options
-	$args = array(
-		'filename' => 'theme-settings.xml',
-		'base_url' => $base_url
-	);
-	$_themeblvd_export_theme_options = new Theme_Blvd_Export_Options( themeblvd_get_option_name(), $args );
+	if ( class_exists('Theme_Blvd_Export_Options') ) {
+
+		$args = array(
+			'filename' => 'theme-settings.xml',
+			'base_url' => $base_url
+		);
+
+		$_themeblvd_export_theme_options = new Theme_Blvd_Export_Options( themeblvd_get_option_name(), $args );
+	}
 
 }
 add_action( 'after_setup_theme', 'themeblvd_site_export_init' ); // We need class Theme_Blvd_Export from theme framework
