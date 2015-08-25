@@ -34,7 +34,7 @@ class Theme_Blvd_Export_Widgets extends Theme_Blvd_Export {
 
 		$sidebars = get_option( 'sidebars_widgets' );
 		if ( is_array( $sidebars ) ) {
-			$sidebars = serialize( $sidebars );
+			$sidebars = base64_encode(maybe_serialize($sidebars));
 		}
 
 		$registered_widgets = array();
